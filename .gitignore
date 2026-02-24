@@ -25,3 +25,13 @@ attached_assets/
 .replit
 replit.md
 node_modules/
+
+
+node_modules
+.env
+dist
+build
+.vite
+.vercel
+*.log
+.DS_Store

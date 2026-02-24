@@ -9,3 +9,5 @@ export const CONTACT_CONFIG = {
     link: "https://wa.me/918700762477",
   }
 };
+
+
