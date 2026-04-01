@@ -128,64 +128,125 @@ export default function Home() {
         </section>
 
         {/* ================= BRANDS ================= */}
-        <section className="border-t border-white/10 py-20">
-          <div className="max-w-6xl mx-auto px-6 text-center">
-            <h2 className="text-4xl font-bold mb-8">Supported RO Brands</h2>
+<section className="border-t border-white/10 py-16 bg-gradient-to-b from-black to-gray-900">
+  <div className="max-w-5xl mx-auto px-4 text-center">
+    
+    {/* Heading */}
+    <h2 className="text-3xl md:text-4xl font-semibold mb-3 tracking-tight">
+      Supported RO Brands
+    </h2>
+    <p className="text-white/60 mb-8 text-sm">
+      We service all major water purifier brands
+    </p>
 
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
-              {brands.map((brand, i) => (
-                <div
-                  key={i}
-                  className="flex items-center justify-center h-24 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition"
-                >
-                  {brand}
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+    {/* Grid */}
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+      {brands.map((brand, i) => (
+        <div
+          key={i}
+          className="group relative flex items-center justify-center h-16 rounded-lg 
+                     bg-white/5 border border-white/10
+                     transition-all duration-200 
+                     hover:bg-white/10 hover:scale-102"
+        >
+          {/* Subtle Glow */}
+          <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 
+                          transition duration-200 blur-md bg-cyan-500/10"></div>
+
+          {/* Brand Name */}
+          <span className="relative z-10 text-sm font-medium text-white/80 group-hover:text-white">
+            {brand}
+          </span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
 
         {/* ================= LOCATIONS ================= */}
-        <section className="border-t border-white/10 py-20">
-          <div className="max-w-6xl mx-auto px-6 text-center">
-            <h2 className="text-3xl font-bold mb-6">Service Locations</h2>
+<section className="border-t border-white/10 py-16 bg-gradient-to-b from-black to-gray-900">
+  <div className="max-w-5xl mx-auto px-4 text-center">
 
-            <div className="flex flex-wrap justify-center gap-3">
-              {locations.map((loc, i) => (
-                <Link key={i} href={`/service/${loc.toLowerCase()}`}>
-                  <span className="px-5 py-2 border border-white/20 rounded-full hover:bg-white hover:text-black transition cursor-pointer">
-                    {loc}
-                  </span>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
+    {/* Heading */}
+    <h2 className="text-3xl md:text-4xl font-semibold mb-3 tracking-tight">
+      Service Locations
+    </h2>
+    <p className="text-white/60 mb-8 text-sm">
+      Fast RO service available across major cities
+    </p>
 
-        {/* ================= FINAL CTA ================= */}
-        <section className="border-t border-white/10 py-24 text-center">
-          <h2 className="text-4xl font-bold mb-4">Pure Drinking Water Guarantee</h2>
+    {/* Pills */}
+    <div className="flex flex-wrap justify-center gap-3">
+      {locations.map((loc, i) => (
+        <div
+          key={i}
+          className="group relative px-5 py-2 rounded-full 
+                     bg-white/5 border border-white/10 text-sm font-medium 
+                     text-white/80 cursor-pointer
+                     transition-all duration-200
+                     hover:bg-cyan-500/10 hover:text-cyan-400 hover:border-cyan-400/40"
+        >
+          {/* Subtle Glow */}
+          <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 
+                          transition duration-200 blur-md bg-cyan-500/10"></div>
 
-          <div className="flex flex-wrap justify-center gap-4 mt-6">
-            <a href={`tel:${CONTACT_CONFIG.phone.full}`}>
-              <Button className="bg-white text-black rounded-full">
-                Call {CONTACT_CONFIG.phone.display}
-              </Button>
-            </a>
+          <span className="relative z-10">{loc}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
 
-            <EmailLink subject="RO Service Booking">
-              <Button className="border border-white text-white hover:bg-white hover:text-black rounded-full">
-                Email Support
-              </Button>
-            </EmailLink>
+        {/* ================= CTA ================= */}
+<section className="py-16 bg-black border-t border-white/10">
+  <div className="max-w-5xl mx-auto px-6">
 
-            <a href={CONTACT_CONFIG.whatsapp.link} target="_blank">
-              <Button className="bg-green-600 rounded-full">
-                <MessageCircle className="mr-2" /> WhatsApp
-              </Button>
-            </a>
-          </div>
-        </section>
+    <div className="flex flex-col md:flex-row items-center justify-between gap-8 
+                    bg-white/5 border border-white/10 rounded-2xl p-8">
+
+      {/* LEFT */}
+      <div className="text-center md:text-left">
+        <h2 className="text-3xl font-semibold">
+          Pure Drinking Water{" "}
+          <span className="text-cyan-400">Guaranteed</span>
+        </h2>
+
+        <p className="text-white/60 mt-3 text-sm max-w-md">
+          Quick RO service with expert technicians at your doorstep.
+        </p>
+      </div>
+
+      {/* RIGHT BUTTONS */}
+      <div className="flex flex-wrap justify-center gap-3">
+
+        <a
+          href="tel:+918700762477"
+          className="px-5 py-2.5 rounded-full bg-cyan-500 text-black text-sm font-medium 
+                     hover:bg-cyan-400 transition"
+        >
+          Call Now
+        </a>
+
+        <a
+          href="https://wa.me/918700762477"
+          className="px-5 py-2.5 rounded-full border border-white/20 text-white/80 text-sm 
+                     hover:border-cyan-400 hover:text-cyan-400 transition"
+        >
+          WhatsApp
+        </a>
+
+        <a
+          href="mailto:support@example.com"
+          className="px-5 py-2.5 rounded-full border border-white/20 text-white/80 text-sm 
+                     hover:border-cyan-400 hover:text-cyan-400 transition"
+        >
+          Email
+        </a>
+
+      </div>
+    </div>
+  </div>
+</section>
       </main>
     </>
   );

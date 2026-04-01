@@ -25,7 +25,7 @@ export function WhatsAppFloat() {
       animate={{ opacity: 1, y: 0 }}
     >
       <img
-        src="/whatsapp.svg"
+        src="/whatsaap.svg"
         alt="WhatsApp"
         className="w-8 h-8"
         draggable={false}
