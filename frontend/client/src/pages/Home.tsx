@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ShieldCheck, Phone, MessageCircle } from "lucide-react";
@@ -132,34 +132,36 @@ export default function Home() {
   <div className="max-w-5xl mx-auto px-4 text-center">
     
     {/* Heading */}
-    <h2 className="text-3xl md:text-4xl font-semibold mb-3 tracking-tight">
+    <h2 className="text-3xl md:text-4xl font-semibold mb-3 tracking-tight text-white">
       Supported RO Brands
     </h2>
     <p className="text-white/60 mb-8 text-sm">
       We service all major water purifier brands
     </p>
 
-    {/* Grid */}
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-      {brands.map((brand, i) => (
-        <div
-          key={i}
-          className="group relative flex items-center justify-center h-16 rounded-lg 
-                     bg-white/5 border border-white/10
-                     transition-all duration-200 
-                     hover:bg-white/10 hover:scale-102"
-        >
-          {/* Subtle Glow */}
-          <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 
-                          transition duration-200 blur-md bg-cyan-500/10"></div>
+    {/* Carousel Wrapper */}
+    <div className="overflow-hidden relative">
+      
+      {/* Moving Track */}
+      <div className="flex gap-4 animate-scroll whitespace-nowrap">
+        
+        {[...brands, ...brands].map((brand, i) => (
+          <div
+            key={i}
+            className="min-w-[120px] flex items-center justify-center h-16 rounded-lg 
+                       bg-white/5 border border-white/10
+                       transition-all duration-200 
+                       hover:bg-white/10 hover:scale-105"
+          >
+            <span className="text-sm font-medium text-white/80 hover:text-white">
+              {brand}
+            </span>
+          </div>
+        ))}
 
-          {/* Brand Name */}
-          <span className="relative z-10 text-sm font-medium text-white/80 group-hover:text-white">
-            {brand}
-          </span>
-        </div>
-      ))}
+      </div>
     </div>
+
   </div>
 </section>
 

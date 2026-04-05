@@ -21,11 +21,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Loader2 } from "lucide-react";
-import { CONTACT_CONFIG } from "@/lib/contact";
+import { useLocation } from "wouter";
 
 export function ServiceForm({ type = "Installation" }: { type?: string }) {
   const { mutate, isPending } = useCreateLead();
-  
+  const [, navigate] = useLocation();
+
   const form = useForm<InsertLead>({
     resolver: zodResolver(insertLeadSchema),
     defaultValues: {
@@ -39,18 +40,30 @@ export function ServiceForm({ type = "Installation" }: { type?: string }) {
   });
 
   function onSubmit(data: InsertLead) {
+    console.log("Submitting:", data);
+
     mutate(data, {
-      onSuccess: () => form.reset(),
+      onSuccess: () => {
+        form.reset();
+        navigate("/thank-you"); // ✅ redirect
+      },
+      onError: (err) => {
+        console.error(err);
+        alert("Something went wrong ❌");
+      },
     });
   }
 
   return (
     <div className="bg-card border border-border rounded-2xl p-6 shadow-sm">
-      <h3 className="font-display font-bold text-2xl mb-2">Book a Service</h3>
-      <p className="text-muted-foreground mb-6">Expert technicians at your doorstep within 4 hours.</p>
+      <h3 className="font-bold text-2xl mb-2">Book a Service</h3>
+      <p className="text-muted-foreground mb-6">
+        Expert technicians at your doorstep within 4 hours.
+      </p>
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          
           <FormField
             control={form.control}
             name="name"
@@ -58,7 +71,7 @@ export function ServiceForm({ type = "Installation" }: { type?: string }) {
               <FormItem>
                 <FormLabel>Full Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="John Doe" {...field} className="rounded-xl" />
+                  <Input placeholder="John Doe" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -71,22 +84,23 @@ export function ServiceForm({ type = "Installation" }: { type?: string }) {
               name="phone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Phone Number</FormLabel>
+                  <FormLabel>Phone</FormLabel>
                   <FormControl>
-                    <Input placeholder={CONTACT_CONFIG.phone.display} {...field} className="rounded-xl" />
+                    <Input placeholder="9876543210" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-             <FormField
+
+            <FormField
               control={form.control}
               name="city"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>City</FormLabel>
                   <FormControl>
-                    <Input placeholder="Delhi" {...field} className="rounded-xl" />
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -100,16 +114,16 @@ export function ServiceForm({ type = "Installation" }: { type?: string }) {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Service Type</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value || type}>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
-                    <SelectTrigger className="rounded-xl">
+                    <SelectTrigger>
                       <SelectValue placeholder="Select service" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="Installation">New Installation</SelectItem>
-                    <SelectItem value="Repair">Repair & Service</SelectItem>
-                    <SelectItem value="AMC">AMC Plan</SelectItem>
+                    <SelectItem value="Installation">Installation</SelectItem>
+                    <SelectItem value="Repair">Repair</SelectItem>
+                    <SelectItem value="AMC">AMC</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -122,25 +136,16 @@ export function ServiceForm({ type = "Installation" }: { type?: string }) {
             name="message"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Issue Description (Optional)</FormLabel>
+                <FormLabel>Issue</FormLabel>
                 <FormControl>
-                  <Textarea 
-                    placeholder="Briefly describe the issue..." 
-                    className="resize-none rounded-xl"
-                    {...field} 
-                  />
+                  <Textarea {...field} />
                 </FormControl>
-                <FormMessage />
               </FormItem>
             )}
           />
 
-          <Button 
-            type="submit" 
-            disabled={isPending}
-            className="w-full rounded-xl py-6 font-bold text-md shadow-lg shadow-primary/20"
-          >
-            {isPending && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
+          <Button type="submit" disabled={isPending} className="w-full">
+            {isPending && <Loader2 className="animate-spin mr-2" />}
             {isPending ? "Booking..." : "Book Now"}
           </Button>
         </form>

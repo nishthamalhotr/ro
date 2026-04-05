@@ -1,5 +1,5 @@
 import { useRoute, useLocation } from "wouter";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { ServiceForm } from "@/components/ServiceForm";
 import { MapPin, CheckCircle, Phone, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";

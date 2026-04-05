@@ -78,7 +78,7 @@ app.use((req, res, next) => {
 /* ================= MAIN BOOTSTRAP ================= */
 (async () => {
   /* AUTH */
-  setupAuth(app);
+  await setupAuth(app);
 
   /* ROUTES — your routes expect server */
   await registerRoutes(httpServer);

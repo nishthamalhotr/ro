@@ -3,7 +3,23 @@
  * Schema-free safe storage stub — returns fallbacks so backend can run.
  * Replace with real DB code after you restore shared/schema.
  */
-import { db } from "./db";
+import { pool } from "./db";
+
+async function ensureLeadsTable() {
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS leads (
+      id SERIAL PRIMARY KEY,
+      name TEXT NOT NULL,
+      phone TEXT NOT NULL,
+      email TEXT,
+      city TEXT NOT NULL,
+      message TEXT,
+      service_type TEXT,
+      status TEXT DEFAULT 'new',
+      created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+    )
+  `);
+}
 
 /* keep types locally minimal to avoid schema dependency */
 export interface IStorage {
@@ -51,7 +67,25 @@ export class DatabaseStorage implements IStorage {
   async getOrder(orderNumber: string) { return undefined; }
   async updateOrder(id: number, updates: any) { return { id, ...updates }; }
 
-  async createLead(lead: any) { return { id: Date.now(), ...lead }; }
+  async createLead(lead: any) {
+    await ensureLeadsTable();
+
+    const result = await pool.query(
+      `INSERT INTO leads (name, phone, email, city, message, service_type)
+       VALUES ($1, $2, $3, $4, $5, $6)
+       RETURNING id, name, phone, email, city, message, service_type AS "serviceType", status, created_at AS "createdAt"`,
+      [
+        lead.name,
+        lead.phone,
+        lead.email ?? null,
+        lead.city,
+        lead.message ?? null,
+        lead.serviceType,
+      ],
+    );
+
+    return result.rows[0];
+  }
 
   async getTechnicians(city?: string) { return []; }
   async createTechnician(tech: any) { return { id: Date.now(), ...tech }; }

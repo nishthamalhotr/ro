@@ -1,6 +1,12 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { api } from '@/lib/api';
-import { type User } from '@shared/schema';
+
+interface User {
+  id: number;
+  name: string;
+  phone: string;
+  email?: string;
+}
 
 interface AuthContextType {
   user: User | null;
@@ -37,7 +43,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const register = async (data: any) => {
-    const res = await api.post('/auth/register', data);
+    const { confirmPassword, ...registerData } = data;
+    const res = await api.post('/auth/register', registerData);
     setUser(res.data);
   };
 

@@ -17,6 +17,7 @@ export const LoginForm = () => {
   const { login } = useAuth();
   const [, setLocation] = useLocation();
   const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -26,10 +27,12 @@ export const LoginForm = () => {
   const onSubmit = async (data: z.infer<typeof loginSchema>) => {
     try {
       setError(null);
+      setIsSubmitting(true);
       await login(data);
       setLocation('/');
     } catch (err: any) {
-      setError(err.response?.data?.error || 'Login failed');
+      setError(err.response?.data?.error || 'Login failed. Please check your credentials.');
+      setIsSubmitting(false);
     }
   };
 
@@ -43,7 +46,7 @@ export const LoginForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Phone or Email</FormLabel>
-              <FormControl><Input {...field} placeholder="+918700762477 or email@example.com" /></FormControl>
+              <FormControl><Input {...field} placeholder="9876543210 or email@example.com" /></FormControl>
               <FormMessage />
             </FormItem>
           )}
@@ -59,8 +62,8 @@ export const LoginForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
-          {form.formState.isSubmitting ? 'Logging in...' : 'Login'}
+        <Button type="submit" className="w-full" disabled={isSubmitting}>
+          {isSubmitting ? 'Logging in...' : 'Login'}
         </Button>
       </form>
     </Form>

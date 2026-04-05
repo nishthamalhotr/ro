@@ -13,6 +13,7 @@ export const RegisterForm = () => {
   const { register } = useAuth();
   const [, setLocation] = useLocation();
   const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<z.infer<typeof insertUserSchema>>({
     resolver: zodResolver(insertUserSchema),
@@ -22,10 +23,12 @@ export const RegisterForm = () => {
   const onSubmit = async (data: z.infer<typeof insertUserSchema>) => {
     try {
       setError(null);
+      setIsSubmitting(true);
       await register(data);
       setLocation('/');
     } catch (err: any) {
-      setError(err.response?.data?.error || 'Registration failed');
+      setError(err.response?.data?.error || 'Registration failed. Please try again.');
+      setIsSubmitting(false);
     }
   };
 
@@ -50,7 +53,7 @@ export const RegisterForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Phone Number</FormLabel>
-              <FormControl><Input placeholder="+918700762477" {...field} /></FormControl>
+              <FormControl><Input placeholder="9876543210" {...field} /></FormControl>
               <FormMessage />
             </FormItem>
           )}
@@ -61,7 +64,7 @@ export const RegisterForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Email (Optional)</FormLabel>
-              <FormControl><Input {...field} type="email" placeholder="ranjanmanish516@gmail.com" value={field.value || ''} /></FormControl>
+              <FormControl><Input {...field} type="email" placeholder="email@example.com" value={field.value || ''} /></FormControl>
               <FormMessage />
             </FormItem>
           )}
@@ -88,8 +91,8 @@ export const RegisterForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
-          {form.formState.isSubmitting ? 'Creating account...' : 'Register'}
+        <Button type="submit" className="w-full" disabled={isSubmitting}>
+          {isSubmitting ? 'Creating account...' : 'Register'}
         </Button>
       </form>
     </Form>

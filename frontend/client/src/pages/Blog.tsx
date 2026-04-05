@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { BlogCard } from "@/components/BlogCard";
 import { BlogSubmitForm } from "@/components/BlogSubmitForm";

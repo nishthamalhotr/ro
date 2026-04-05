@@ -1,5 +1,5 @@
-import React from "react";
-import { Helmet } from "react-helmet";
+import React, { JSX } from "react";
+import { Helmet } from "react-helmet-async";
 import { EmailLink } from "@/components/EmailLink";
 
 const WHATSAPP_NUMBER = "+918700762477";
@@ -96,29 +96,83 @@ export default function ProductsPage(): JSX.Element {
             </div>
 
             {/* Available Products List */}
-            <section className="mt-10 bg-white rounded-xl p-8 shadow-sm border border-slate-100">
-              <h2 className="text-2xl font-bold text-slate-900">Products & Spare Parts We Supply</h2>
-              <p className="mt-2 text-slate-600">We supply genuine parts, spares and full RO units. If you don't see your item listed, contact us — we'll source it.</p>
+<section className="mt-10 bg-white rounded-xl p-8 shadow-sm border border-slate-100">
 
-              <ul className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 list-none">
-                {[
-                  { title: "Domestic RO units", desc: "All brands like KENT, Aquaguard, etc." },
-                  { title: "Replacement filters", desc: "Carbon, Sediment, Spun, Pre-filter" },
-                  { title: "RO Membranes", desc: "High-rejection TDS-rated membranes" },
-                  { title: "RO Pumps", desc: "Heavy-duty pumps for all brands" },
-                  { title: "Solenoid valves", desc: "Auto-cut off and inlet valves" },
-                  { title: "Adapters & Fittings", desc: "SMPS adapters and leak-proof fittings" },
-                  { title: "Electrical parts", desc: "PCBs, Low Pressure Switches, Sensors" },
-                  { title: "UV lamps & adapters", desc: "Philips and other genuine UV spares" },
-                  { title: "Faulty parts & repair kits", desc: "Complete repair solutions" },
-                  { title: "Complete filter kits", desc: "Full service filter replacement packs" },
-                ].map((item) => (
-                  <li key={item.title} className="bg-slate-50/50 rounded-lg p-4 border border-slate-100">
-                    <h3 className="font-bold text-slate-900">{item.title}</h3>
-                    <p className="mt-1 text-sm text-slate-600 leading-relaxed">{item.desc}. WhatsApp for pricing.</p>
-                  </li>
-                ))}
-              </ul>
+  <h2 className="text-2xl font-bold text-slate-900">
+    Products & Spare Parts We Supply
+  </h2>
+
+  <p className="mt-2 text-slate-600">
+    We supply genuine parts, spares and full RO units. If you don't see your item listed, contact us — we'll source it.
+  </p>
+
+  <ul className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 list-none">
+
+    {[
+      {
+        title: "Domestic RO units",
+        desc: "All brands like KENT, Aquaguard, etc.",
+        img: "https://pub-1407f82391df4ab1951418d04be76914.r2.dev/uploads/056d7513-027e-4b05-83ad-623efa32951c.png"
+      },
+      {
+        title: "Replacement filters",
+        desc: "Carbon, Sediment, Spun, Pre-filter",
+        img: "https://pub-1407f82391df4ab1951418d04be76914.r2.dev/uploads/530b3495-7e7c-45ba-8d47-481e26a2c50b.png"
+      },
+      {
+        title: "RO Membranes",
+        desc: "High-rejection TDS-rated membranes",
+        img: "https://pub-1407f82391df4ab1951418d04be76914.r2.dev/uploads/1da67874-f96d-4ea2-9b76-ade97d828211.png"
+      },
+      {
+        title: "RO Pumps",
+        desc: "Heavy-duty pumps for all brands",
+        img: "https://pub-1407f82391df4ab1951418d04be76914.r2.dev/uploads/31a7c1ed-4d6b-4850-a39a-ed60b375040e.png"
+      },
+      {
+        title: "Solenoid valves",
+        desc: "Auto-cut off and inlet valves",
+        img: "https://pub-1407f82391df4ab1951418d04be76914.r2.dev/uploads/a6c9c504-c750-4ba1-9e78-9d4b8a6704be.png"
+   },
+      {
+        title: "Electrical parts",
+        desc: "PCBs, Low Pressure Switches, Sensors",
+        img: "https://pub-1407f82391df4ab1951418d04be76914.r2.dev/uploads/434e46bc-0b71-4e59-a2f1-c98bf8fc31d6.png"
+      }
+    ].map((item) => (
+      <li
+        key={item.title}
+        className="bg-white rounded-xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-lg transition duration-300"
+      >
+        {/* Title */}
+        <div className="p-4">
+          <h3 className="font-semibold text-lg text-slate-900">
+            {item.title}
+          </h3>
+        </div>
+
+        {/* Image BELOW heading */}
+        <img
+          src={item.img}
+          alt={item.title}
+          className="w-full h-40 object-cover"
+        />
+
+        {/* Description */}
+        <div className="p-4">
+          <p className="text-sm text-slate-600 leading-relaxed">
+            {item.desc}
+          </p>
+
+          {/* Button */}
+          <button className="mt-3 w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg text-sm transition">
+            📱 Get Price on WhatsApp
+          </button>
+        </div>
+      </li>
+    ))}
+
+  </ul>
 
               {/* Simple spare list CTA */}
               <div className="mt-8 border-t border-slate-100 pt-8 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">

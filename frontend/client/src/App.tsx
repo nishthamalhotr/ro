@@ -3,6 +3,7 @@ import { Switch, Route } from "wouter";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/toaster";
+import { HelmetProvider } from "react-helmet-async";
 
 import { queryClient } from "./lib/queryClient";
 import { AuthProvider } from "@/components/auth/AuthProvider";
@@ -17,6 +18,7 @@ import CityService from "@/pages/CityService";
 import Blog from "@/pages/Blog";
 import BlogDetail from "@/pages/BlogDetail";
 import Contact from "@/pages/Contact";
+import ThankYou from "@/pages/ThankYou";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import NotFound from "@/pages/not-found";
@@ -49,6 +51,7 @@ function Router() {
 
         {/* Contact */}
         <Route path="/contact" component={Contact} />
+        <Route path="/thank-you" component={ThankYou} />
 
         {/* 404 */}
         <Route component={NotFound} />
@@ -60,14 +63,16 @@ function Router() {
 /* ---------------- APP ROOT ---------------- */
 export default function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <AuthProvider>
-          <Router />
-          <WhatsAppFloat />
-          <Toaster />
-        </AuthProvider>
-      </TooltipProvider>
-    </QueryClientProvider>
+    <HelmetProvider>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <AuthProvider>
+            <Router />
+            <WhatsAppFloat />
+            <Toaster />
+          </AuthProvider>
+        </TooltipProvider>
+      </QueryClientProvider>
+    </HelmetProvider>
   );
 }

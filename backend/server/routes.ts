@@ -38,6 +38,11 @@ export function registerRoutes(appOrServer: any) {
     res.json(order);
   });
 
+  app.post('/api/leads', async (req, res) => {
+    const lead = await storage.createLead(req.body);
+    res.json(lead);
+  });
+
   app.get('/api/technicians', async (req, res) => {
     const techs = await storage.getTechnicians(req.query.city as string | undefined);
     res.json(techs);

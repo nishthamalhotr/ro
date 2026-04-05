@@ -3,15 +3,6 @@ import {
   insertProductSchema, 
   insertOrderSchema, 
   insertLeadSchema, 
-  insertTechnicianSchema, 
-  insertBlogPostSchema, 
-  insertReviewSchema,
-  products,
-  orders,
-  leads,
-  technicians,
-  blogPosts,
-  reviews
 } from './schema';
 
 export const errorSchemas = {
@@ -38,14 +29,14 @@ export const api = {
         sort: z.enum(['price_asc', 'price_desc', 'newest']).optional(),
       }).optional(),
       responses: {
-        200: z.array(z.custom<typeof products.$inferSelect>()),
+        200: z.array(z.custom<any>()),
       },
     },
     get: {
       method: 'GET' as const,
       path: '/api/products/:slug',
       responses: {
-        200: z.custom<typeof products.$inferSelect>(),
+        200: z.custom<any>(),
         404: errorSchemas.notFound,
       },
     },
@@ -53,7 +44,7 @@ export const api = {
       method: 'GET' as const,
       path: '/api/products/id/:id',
       responses: {
-        200: z.custom<typeof products.$inferSelect>(),
+        200: z.custom<any>(),
         404: errorSchemas.notFound,
       },
     },
@@ -62,7 +53,7 @@ export const api = {
       path: '/api/products',
       input: insertProductSchema,
       responses: {
-        201: z.custom<typeof products.$inferSelect>(),
+        201: z.custom<any>(),
         400: errorSchemas.validation,
       },
     },
@@ -71,7 +62,7 @@ export const api = {
       path: '/api/products/:id',
       input: insertProductSchema.partial(),
       responses: {
-        200: z.custom<typeof products.$inferSelect>(),
+        200: z.custom<any>(),
         404: errorSchemas.notFound,
       },
     },
@@ -95,7 +86,7 @@ export const api = {
         })),
       }),
       responses: {
-        201: z.custom<typeof orders.$inferSelect>(),
+        201: z.custom<any>(),
         400: errorSchemas.validation,
       },
     },
@@ -103,7 +94,7 @@ export const api = {
       method: 'GET' as const,
       path: '/api/orders/:orderNumber',
       responses: {
-        200: z.custom<typeof orders.$inferSelect>(),
+        200: z.custom<any>(),
         404: errorSchemas.notFound,
       },
     },
@@ -127,7 +118,7 @@ export const api = {
       path: '/api/leads',
       input: insertLeadSchema,
       responses: {
-        201: z.custom<typeof leads.$inferSelect>(),
+        201: z.custom<any>(),
         400: errorSchemas.validation,
       },
     },
@@ -138,7 +129,7 @@ export const api = {
       path: '/api/technicians',
       input: z.object({ city: z.string().optional() }).optional(),
       responses: {
-        200: z.array(z.custom<typeof technicians.$inferSelect>()),
+        200: z.array(z.custom<any>()),
       },
     },
   },
@@ -147,14 +138,14 @@ export const api = {
       method: 'GET' as const,
       path: '/api/blog',
       responses: {
-        200: z.array(z.custom<typeof blogPosts.$inferSelect>()),
+        200: z.array(z.custom<any>()),
       },
     },
     get: {
       method: 'GET' as const,
       path: '/api/blog/:slug',
       responses: {
-        200: z.custom<typeof blogPosts.$inferSelect>(),
+        200: z.custom<any>(),
         404: errorSchemas.notFound,
       },
     },
