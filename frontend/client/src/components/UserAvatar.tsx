@@ -15,8 +15,11 @@ export function UserAvatar() {
 
   if (!user) return null;
 
-  // Get initials from name
-  const initials = user.name
+  // ✅ Create full name
+  const fullName = `${user.firstName ?? ''} ${user.lastName ?? ''}`.trim();
+
+  // ✅ Get initials safely
+  const initials = fullName
     .split(' ')
     .map((word) => word[0])
     .join('')
@@ -40,14 +43,28 @@ export function UserAvatar() {
             </Avatar>
           </button>
         </DropdownMenuTrigger>
+
         <DropdownMenuContent align="end" className="w-56">
           <div className="flex flex-col space-y-1 p-2">
-            <p className="text-sm font-semibold text-gray-900">{user.name}</p>
-            <p className="text-xs text-gray-500">{user.phone}</p>
-            {user.email && <p className="text-xs text-gray-500">{user.email}</p>}
+            {/* ✅ Fixed name */}
+            <p className="text-sm font-semibold text-gray-900">
+              {fullName || 'User'}
+            </p>
+
+            {/* ❌ user.phone removed (not in type) */}
+
+            {/* ✅ email safe */}
+            {user.email && (
+              <p className="text-xs text-gray-500">{user.email}</p>
+            )}
           </div>
+
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-red-600">
+
+          <DropdownMenuItem
+            onClick={handleLogout}
+            className="cursor-pointer text-red-600"
+          >
             Logout
           </DropdownMenuItem>
         </DropdownMenuContent>
