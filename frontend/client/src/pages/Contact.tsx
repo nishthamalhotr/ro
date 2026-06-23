@@ -1,6 +1,17 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Phone, Mail, MapPin, User, Send, CheckCircle2 } from "lucide-react";
+import {
+  Phone,
+  Mail,
+  MapPin,
+  User,
+  Send,
+  CheckCircle2,
+  Clock,
+  Shield,
+  MessageCircle,
+} from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -12,10 +23,13 @@ import { EmailLink } from "@/components/EmailLink";
 
 export default function Contact() {
   const { toast } = useToast();
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     e.preventDefault();
     setIsSubmitting(true);
 
@@ -25,24 +39,29 @@ export default function Contact() {
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(data),
       });
 
       if (res.ok) {
         setSubmitted(true);
+
         toast({
-          title: "Message Sent",
-          description: "We've received your inquiry and will get back to you soon.",
+          title: "Message Sent Successfully",
+          description:
+            "Our team will contact you shortly.",
         });
       } else {
-        throw new Error("Failed to send message");
+        throw new Error();
       }
-    } catch (error) {
+    } catch {
       toast({
         variant: "destructive",
-        title: "Error",
-        description: "Something went wrong. Please try again or call us directly.",
+        title: "Something went wrong",
+        description:
+          "Please call us directly or try again.",
       });
     } finally {
       setIsSubmitting(false);
@@ -51,20 +70,32 @@ export default function Contact() {
 
   if (submitted) {
     return (
-      <div className="min-h-[60vh] flex items-center justify-center px-4">
-        <motion.div 
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4">
+        <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="text-center space-y-4"
+          className="bg-white p-10 rounded-3xl shadow-xl text-center max-w-lg"
         >
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-100 text-green-600 mb-4">
-            <CheckCircle2 className="w-10 h-10" />
+          <div className="w-24 h-24 rounded-full bg-green-100 text-green-600 flex items-center justify-center mx-auto mb-6">
+            <CheckCircle2 className="w-12 h-12" />
           </div>
-          <h1 className="text-3xl font-bold text-slate-900">Thank You!</h1>
-          <p className="text-slate-600 max-w-md mx-auto">
-            Your message has been received. Our team will contact you within 24 hours.
+
+          <h1 className="text-4xl font-bold mb-4">
+            Thank You!
+          </h1>
+
+          <p className="text-slate-600 mb-6">
+            Your request has been received successfully.
+            Our technician will contact you within
+            30–60 minutes.
           </p>
-          <Button onClick={() => setSubmitted(false)} variant="outline">Send Another Message</Button>
+
+          <Button
+            onClick={() => setSubmitted(false)}
+            size="lg"
+          >
+            Send Another Message
+          </Button>
         </motion.div>
       </div>
     );
@@ -73,69 +104,183 @@ export default function Contact() {
   return (
     <div className="bg-slate-50 min-h-screen">
       <Helmet>
-        <title>Contact Us - AquaShield Solutions | RO Repair & Service Delhi</title>
-        <meta name="description" content="Contact AquaShield Solutions for expert RO repair, installation, and AMC services in Delhi NCR. Call +91 8700762477." />
+        <title>
+          Contact AquaShield Solutions | RO Repair Delhi
+        </title>
+
+        <meta
+          name="description"
+          content="RO repair, installation and AMC services in Delhi NCR."
+        />
       </Helmet>
 
-      <div className="bg-primary py-20 text-white text-center">
-        <div className="max-w-7xl mx-auto px-4">
-          <h1 className="text-4xl lg:text-5xl font-bold mb-4">Contact & Support</h1>
-          <p className="text-blue-100 text-lg max-w-2xl mx-auto">
-            Delhi's trusted experts for RO repair, installation, and AMC services. 
-            Reach out to us for doorstep service within 1 hour.
+      {/* Hero Section */}
+      <section className="bg-gradient-to-r from-blue-700 to-cyan-600 text-white py-24">
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-5xl font-bold mb-6"
+          >
+            Contact & Support
+          </motion.h1>
+
+          <p className="max-w-3xl mx-auto text-lg text-blue-100 mb-8">
+            Fast RO repair, installation, and AMC
+            services at your doorstep across Delhi NCR.
           </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button
+              size="lg"
+              className="bg-white text-blue-700 hover:bg-blue-50"
+              asChild
+            >
+              <a href="tel:+919910472820">
+                <Phone className="w-4 h-4 mr-2" />
+                Call Now
+              </a>
+            </Button>
+
+            <Button
+              size="lg"
+              variant="outline"
+              className="border-white text-white hover:bg-white hover:text-blue-700"
+              asChild
+            >
+              <a
+                href="https://wa.me/919910472820"
+                target="_blank"
+              >
+                <MessageCircle className="w-4 h-4 mr-2" />
+                WhatsApp Us
+              </a>
+            </Button>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <div className="max-w-7xl mx-auto px-4 py-16 -mt-10">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Contact Info Sidebar */}
+      {/* Service Features */}
+      <section className="-mt-10 max-w-6xl mx-auto px-4">
+        <div className="grid md:grid-cols-3 gap-6">
+          <Card className="shadow-lg">
+            <CardContent className="p-6 text-center">
+              <Clock className="w-10 h-10 mx-auto text-blue-600 mb-3" />
+              <h3 className="font-bold text-lg">
+                1 Hour Service
+              </h3>
+              <p className="text-slate-500">
+                Fast doorstep service.
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="shadow-lg">
+            <CardContent className="p-6 text-center">
+              <Shield className="w-10 h-10 mx-auto text-green-600 mb-3" />
+              <h3 className="font-bold text-lg">
+                Genuine Parts
+              </h3>
+              <p className="text-slate-500">
+                High-quality spare parts.
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="shadow-lg">
+            <CardContent className="p-6 text-center">
+              <CheckCircle2 className="w-10 h-10 mx-auto text-purple-600 mb-3" />
+              <h3 className="font-bold text-lg">
+                Service Warranty
+              </h3>
+              <p className="text-slate-500">
+                Guaranteed customer satisfaction.
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* Main Section */}
+      <div className="max-w-7xl mx-auto px-4 py-16">
+        <div className="grid lg:grid-cols-3 gap-8">
+          {/* Contact Information */}
           <div className="space-y-6">
-            <Card className="hover-elevate">
-              <CardContent className="p-6 space-y-6">
-                <h2 className="text-xl font-bold text-slate-900 mb-4">Get in Touch</h2>
-                
-                <div className="flex items-start gap-4">
-                  <div className="bg-blue-100 p-3 rounded-full text-primary">
-                    <User className="w-5 h-5" />
+            <Card className="shadow-lg border-0">
+              <CardContent className="p-6 space-y-8">
+                <h2 className="text-2xl font-bold">
+                  Get in Touch
+                </h2>
+
+                <div className="flex gap-4">
+                  <div className="bg-blue-100 p-3 rounded-full">
+                    <User className="text-blue-600" />
                   </div>
+
                   <div>
-                    <p className="font-bold text-slate-900">Ranjeet Sharma</p>
-                    <p className="text-sm text-slate-500">Senior Technician</p>
-                    <a href="tel:+919910472820" className="text-primary font-medium hover:underline">+91 9910472820</a>
+                    <h3 className="font-bold">
+                      Ranjeet Sharma
+                    </h3>
+                    <p className="text-slate-500 text-sm">
+                      Senior Technician
+                    </p>
+                    <a
+                      href="tel:+919910472820"
+                      className="text-blue-600 font-medium"
+                    >
+                      +91 9910472820
+                    </a>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4">
-                  <div className="bg-blue-100 p-3 rounded-full text-primary">
-                    <User className="w-5 h-5" />
+                <div className="flex gap-4">
+                  <div className="bg-blue-100 p-3 rounded-full">
+                    <Phone className="text-blue-600" />
                   </div>
+
                   <div>
-                    <p className="font-bold text-slate-900">Manish Ranjan</p>
-                    <p className="text-sm text-slate-500">Orders & Enquiries</p>
-                    <a href={`tel:${CONTACT_CONFIG.phone.full}`} className="text-primary font-medium hover:underline">{CONTACT_CONFIG.phone.display}</a>
+                    <h3 className="font-bold">
+                      Customer Support
+                    </h3>
+
+                    <a
+                      href={`tel:${CONTACT_CONFIG.phone.full}`}
+                      className="text-blue-600 font-medium"
+                    >
+                      {CONTACT_CONFIG.phone.display}
+                    </a>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4">
-                  <div className="bg-blue-100 p-3 rounded-full text-primary">
-                    <Mail className="w-5 h-5" />
+                <div className="flex gap-4">
+                  <div className="bg-blue-100 p-3 rounded-full">
+                    <Mail className="text-blue-600" />
                   </div>
+
                   <div>
-                    <p className="font-bold text-slate-900">Email Us</p>
-                    <EmailLink className="text-primary font-medium hover:underline" />
+                    <h3 className="font-bold">
+                      Email Us
+                    </h3>
+
+                    <EmailLink className="text-blue-600" />
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4">
-                  <div className="bg-blue-100 p-3 rounded-full text-primary">
-                    <MapPin className="w-5 h-5" />
+                <div className="flex gap-4">
+                  <div className="bg-blue-100 p-3 rounded-full">
+                    <MapPin className="text-blue-600" />
                   </div>
+
                   <div>
-                    <p className="font-bold text-slate-900">Office Address</p>
-                    <p className="text-sm text-slate-500">
-                      House No. 40, Rajpur Khurd, Chhatarpur,<br/>
-                      South Delhi - 110068
+                    <h3 className="font-bold">
+                      Office Address
+                    </h3>
+
+                    <p className="text-slate-500">
+                      House No. 40,
+                      Rajpur Khurd,
+                      Chhatarpur,
+                      South Delhi – 110068
                     </p>
                   </div>
                 </div>
@@ -145,36 +290,86 @@ export default function Contact() {
 
           {/* Contact Form */}
           <div className="lg:col-span-2">
-            <Card>
+            <Card className="shadow-xl border-0">
               <CardContent className="p-8">
-                <h2 className="text-2xl font-bold text-slate-900 mb-6">Send us a Message</h2>
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium">Full Name</label>
-                      <Input name="name" placeholder="John Doe" required />
+                <h2 className="text-3xl font-bold mb-2">
+                  Send a Message
+                </h2>
+
+                <p className="text-slate-500 mb-8">
+                  Fill out the form and our team will
+                  contact you shortly.
+                </p>
+
+                <form
+                  onSubmit={handleSubmit}
+                  className="space-y-6"
+                >
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="text-sm font-medium">
+                        Full Name
+                      </label>
+
+                      <Input
+                        name="name"
+                        placeholder="Your Name"
+                        required
+                        className="mt-2 h-12"
+                      />
                     </div>
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium">Phone Number</label>
-                      <Input name="phone" placeholder="+91 87007 62477" required />
+
+                    <div>
+                      <label className="text-sm font-medium">
+                        Phone Number
+                      </label>
+
+                      <Input
+                        name="phone"
+                        placeholder="+91 XXXXX XXXXX"
+                        required
+                        className="mt-2 h-12"
+                      />
                     </div>
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Email Address (Optional)</label>
-                    <Input name="email" type="email" placeholder="john@example.com" />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">How can we help?</label>
-                    <Textarea 
-                      name="message" 
-                      placeholder="Tell us about your RO problem or requirement..." 
-                      className="min-h-[150px]"
-                      required
+
+                  <div>
+                    <label className="text-sm font-medium">
+                      Email Address
+                    </label>
+
+                    <Input
+                      type="email"
+                      name="email"
+                      placeholder="example@gmail.com"
+                      className="mt-2 h-12"
                     />
                   </div>
-                  <Button type="submit" size="lg" className="w-full md:w-auto" disabled={isSubmitting}>
-                    {isSubmitting ? "Sending..." : "Send Message"}
-                    <Send className="w-4 h-4 ml-2" />
+
+                  <div>
+                    <label className="text-sm font-medium">
+                      Message
+                    </label>
+
+                    <Textarea
+                      name="message"
+                      required
+                      placeholder="Describe your RO issue..."
+                      className="mt-2 min-h-[160px]"
+                    />
+                  </div>
+
+                  <Button
+                    type="submit"
+                    size="lg"
+                    disabled={isSubmitting}
+                    className="w-full md:w-auto"
+                  >
+                    {isSubmitting
+                      ? "Sending..."
+                      : "Send Message"}
+
+                    <Send className="ml-2 w-4 h-4" />
                   </Button>
                 </form>
               </CardContent>

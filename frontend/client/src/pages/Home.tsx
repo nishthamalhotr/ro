@@ -11,7 +11,7 @@ import AMCPlans from "@/components/AMCPlans";
 import SparePartsTable from "@/components/SparePartsTable";
 import ServiceCharges from "@/components/ServiceCharges";
 import { ResponsiveBg } from "@/components/Background/ResponsiveBg";
-
+import LeadPopup from "@/components/Leadpopup";
 export default function Home() {
   const { data: amcPlans } = useQuery<any[]>({ queryKey: ["/api/amc-plans"] });
 
@@ -41,6 +41,7 @@ export default function Home() {
 
   return (
     <>
+      <LeadPopup />
       <Helmet>
         <title>AquaShield — Premium RO Services</title>
       </Helmet>
